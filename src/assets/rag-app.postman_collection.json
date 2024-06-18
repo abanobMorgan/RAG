@@ -1,0 +1,116 @@
+{
+	"info": {
+		"_postman_id": "52b0546a-7d8a-4092-8058-ee160def3b90",
+		"name": "rag-app",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "24525341"
+	},
+	"item": [
+		{
+			"name": "welcome-request",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{api}}/welcome",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"welcome"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "process",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"file_id\": \"fvihoxng0nhm_1_wav_afGfVja25081786.txt\",\n  \"chunk_size\": 100,\n  \"overlap_size\": 20,\n  \"do_reset\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/api/v1/data/process/1",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"data",
+						"process",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "upload",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"file_id\": \"fvihoxng0nhm_1_wav_afGfVja25081786.txt\",\n  \"chunk_size\": 100,\n  \"overlap_size\": 20,\n  \"do_reset\": 0\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{api}}/api/v1/data/upload/1",
+					"host": [
+						"{{api}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"data",
+						"upload",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "api",
+			"value": "http://0.0.0.0:5000",
+			"type": "string"
+		}
+	]
+}
