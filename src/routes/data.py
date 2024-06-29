@@ -20,6 +20,7 @@ import logging
 from .schemes.data import ProcessRequest
 from models.project_model import ProjectModel
 from models.chunk_model import ChunkModel
+from models.db_schemes import DataChunk
 
 logger = logging.getLogger('uvicorn.error')
 
@@ -34,7 +35,7 @@ async def upload_data(
     app_settings: Settings = Depends(get_settings)
 ):
         
-    project_model = ProjectModel(
+    project_model = await ProjectModel.create_instance(
         db_client= request.app.db_client
     )
     project= await project_model.get_project_or_create_one(
@@ -92,7 +93,7 @@ async def process_endpoint(
     overlap_size = process_request.overlap_size
     do_reset = process_request.do_reset
 
-    project_model = ProjectModel(
+    project_model = await ProjectModel.create_instance(
         db_client=request.app.db_client
     )
 
@@ -129,7 +130,7 @@ async def process_endpoint(
         for i, chunk in enumerate(file_chunks)
     ]
 
-    chunk_model = ChunkModel(
+    chunk_model = await ChunkModel.create_instance(
         db_client=request.app.db_client
     )
 
