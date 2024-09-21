@@ -24,7 +24,7 @@ class ProcessController(BaseController):
             self.project_path,
             file_id
         )
-        if not os.pyth.exists(file_path):return None
+        if not os.path.exists(file_path):return None
         if file_ext == ProcessingEnum.TXT.value:
             return TextLoader(file_path, encoding="utf-8")
 

@@ -17,9 +17,10 @@ base_router = APIRouter(
 )
 
 @base_router.get("/")
-async def alive(app_settigs: Settings=Depends(get_settings)):
-    app_name = os.getenv('APP_NAME')
-    app_version = os.getenv('APP_VERSION')
+async def alive(app_settings: Settings=Depends(get_settings)):
+    app_name = app_settings.APP_NAME
+    app_version = app_settings.APP_VERSION
+
 
     return {
         "app_name": app_name,
