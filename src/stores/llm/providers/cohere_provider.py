@@ -59,7 +59,7 @@ class CoHereProvider(LLMInterface):
             temperature = temperature,
             max_tokens = max_output_tokens
         )
-
+        
         if not response or not response.text:
             self.logger.error("Error while generating text with CoHere")
             return None
@@ -98,6 +98,6 @@ class CoHereProvider(LLMInterface):
     def construct_prompt(self, prompt: str, role: str):
         return {
             "role": role,
-            "text": self.process_text(prompt)
+            "text": prompt
         }
     

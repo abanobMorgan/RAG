@@ -19,10 +19,14 @@ class NLPController(BaseController):
         return f"collection_{project_id}".strip()
     
     def reset_vector_db_collection(self, project: Project):
+        if project.project_id is None:
+            return None
         collection_name = self.create_collection_name(project_id=project.project_id)
         return self.vectordb_client.delete_collection(collection_name=collection_name)
     
     def get_vector_db_collection_info(self, project: Project):
+        if project.project_id is None:
+            return None
         collection_name = self.create_collection_name(project_id=project.project_id)
         collection_info = self.vectordb_client.get_collection_info(collection_name=collection_name)
 
@@ -110,13 +114,14 @@ class NLPController(BaseController):
         documents_prompts = "\n".join([
             self.template_parser.get("rag", "document_prompt", {
                     "doc_num": idx + 1,
-                    "chunk_text": doc.text,
+                    "chunk_text": self.generation_client.process_text(doc.text),
             })
             for idx, doc in enumerate(retrieved_documents)
         ])
 
-        footer_prompt = self.template_parser.get("rag", "footer_prompt")
-
+        footer_prompt = self.template_parser.get("rag", "footer_prompt", {
+            "query": query
+        })
         # step3: Construct Generation Client Prompts
         chat_history = [
             self.generation_client.construct_prompt(
